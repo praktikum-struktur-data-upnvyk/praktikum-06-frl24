@@ -73,7 +73,17 @@ string display(const Queue& q) {
 // =============================================================================
 bool enqueue(Queue& q, int nomor) {
     // TODO: kerjakan di sini
-    return false;
+    Node *baru = new Node;
+    baru->data = nomor;
+    baru->next = nullptr;
+    if (isEmpty(q)) {
+     q.depan = baru;
+    }
+    else {
+     q.belakang->next = baru;
+    }
+    q.belakang = baru;
+    return true;
 }
 
 // =============================================================================
@@ -81,7 +91,15 @@ bool enqueue(Queue& q, int nomor) {
 // =============================================================================
 bool dequeue(Queue& q, int& nomor) {
     // TODO: kerjakan di sini
-    return false;
+    if (isEmpty(q)) {
+        return false;
+    }
+    Node* temp = q.depan;
+    nomor = temp->data;
+    q.depan = temp->next;
+    delete temp;
+    if (q.depan == nullptr) q.belakang = nullptr;
+    return true;
 }
 
 // =============================================================================
@@ -89,6 +107,12 @@ bool dequeue(Queue& q, int& nomor) {
 // =============================================================================
 void clear(Queue& q) {
     // TODO: kerjakan di sini
+    while (!isEmpty(q)) {
+        Node* hapus = q.depan;
+        q.depan = q.depan->next;
+        delete hapus;
+    }
+     q.belakang = nullptr;
 }
 
 // =============================================================================
